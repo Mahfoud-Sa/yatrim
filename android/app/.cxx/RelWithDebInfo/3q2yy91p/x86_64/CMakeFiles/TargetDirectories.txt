@@ -1,0 +1,2 @@
+D:/yatrim/android/app/.cxx/RelWithDebInfo/3q2yy91p/x86_64/CMakeFiles/edit_cache.dir
+D:/yatrim/android/app/.cxx/RelWithDebInfo/3q2yy91p/x86_64/CMakeFiles/rebuild_cache.dir
