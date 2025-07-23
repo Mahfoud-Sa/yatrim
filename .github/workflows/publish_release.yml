@@ -3,8 +3,8 @@ name: Build APK and Publish Release
 on:
   push:
     tags:
-      - 'v*' # Trigger on new version tags (e.g., v1.0.0)
-  workflow_dispatch: # Allows manual triggering
+      - 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,37 +21,26 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Set up Flutter
+      - name: Set up Flutter (Version 3.32.5 - matches your local)
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.9' # Use a specific version (recommended)
+          flutter-version: '3.32.5'  # Exact version you're using locally
           channel: 'stable'
 
-      - name: Get Flutter packages
-        run: flutter pub get
+      - name: Verify Flutter version
+        run: flutter --version
 
-      - name: List directory contents for debugging
-        run: |
-          Write-Host "Listing contents of lib/app/modules/..."
-          Get-ChildItem -Path "lib/app/modules/" -Recurse | Format-Table Name, FullName
-        shell: powershell
+      - name: Get dependencies
+        run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Find and prepare APK path for upload
-        id: find_apk
+      - name: Prepare APK artifact
         run: |
-          $APK_PATH = Get-ChildItem -Path "build/app/outputs/flutter-apk" -Filter "app-release.apk" -Recurse | Select-Object -First 1 -ExpandProperty FullName
-          if (-not $APK_PATH) {
-            Write-Host "ERROR: app-release.apk not found!"
-            exit 1
-          }
-          Write-Host "Found APK at $APK_PATH"
-          New-Item -ItemType Directory -Force -Path "artifacts"
-          Copy-Item -Path $APK_PATH -Destination "artifacts/app-release.apk"
-          Write-Host "APK copied to artifacts/app-release.apk"
-        shell: powershell
+          mkdir -p artifacts
+          cp build/app/outputs/flutter-apk/app-release.apk artifacts/
+        shell: bash
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -71,14 +60,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-release-apk
-          path: .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body: "Automated release for version ${{ github.ref_name }}"
+          body: "Built with Flutter 3.32.5 (Dart 3.8.1)"
           files: app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
