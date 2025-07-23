@@ -2,18 +2,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class GitHubApiService {
-  final String githubToken;
   final String owner = "Mahfoud-Sa";
-  final String repo = "athkari";
+  final String repo = "yatrim";
 
-  GitHubApiService({required this.githubToken});
+  GitHubApiService();
 
   Future<List<Map<String, dynamic>>> listReleases() async {
     final response = await http.get(
       Uri.parse('https://api.github.com/repos/$owner/$repo/releases'),
       headers: {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token $githubToken',
+        'Authorization': 'token ',
       },
     );
 
@@ -30,7 +29,7 @@ class GitHubApiService {
       Uri.parse('https://api.github.com/repos/$owner/$repo/releases/latest'),
       headers: {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token $githubToken',
+        // 'Authorization': 'token $githubToken',
       },
     );
 
@@ -48,7 +47,7 @@ class GitHubApiService {
       Uri.parse('https://api.github.com/repos/$owner/$repo/releases/latest'),
       headers: {
         'Accept': 'application/vnd.github.v3+json',
-        'Authorization': 'token $githubToken',
+        //'Authorization': 'token $githubToken',
       },
     );
 

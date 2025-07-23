@@ -26,6 +26,13 @@ class EventsController extends GetxController {
     fetchEvents();
   }
 
+  // Renamed to avoid conflict with GetLifeCycleBase.onDelete
+  void onControllerDelete() {
+    super.onDelete();
+    print('[GetX] EventsController onDelete called. Stack:');
+    print(StackTrace.current);
+  }
+
   Future<void> fetchEvents() async {
     isLoading.value = true;
     try {

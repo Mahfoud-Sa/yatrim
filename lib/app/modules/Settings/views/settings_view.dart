@@ -76,13 +76,13 @@ class SettingsScreen extends GetView<SettingsController> {
             onTap: () => Get.toNamed(Routes.FONT_SIZE),
           ),
           // Dark Mode مع تغليف بـ Obx
-          Obx(
-            () => _buildSwitchTile(
-              title: languageController.translate('dark_mode'),
-              value: controller.isDarkMode.value,
-              onChanged: (value) => controller.toggleDarkMode(),
-            ),
-          ),
+          // Obx(
+          //   () => _buildSwitchTile(
+          //     title: languageController.translate('dark_mode'),
+          //     value: controller.isDarkMode.value,
+          //     onChanged: (value) => controller.toggleDarkMode(),
+          //   ),
+          //  ),
           // Daily Notifications مع تغليف بـ Obx
           Obx(
             () => _buildSwitchTile(
@@ -127,9 +127,27 @@ class SettingsScreen extends GetView<SettingsController> {
             onTap: controller.contactUs,
           ),
           _buildSettingTile(
-            title: languageController.translate('check_updates'),
+            title: languageController.translate("check_updates"),
             icon: Icons.update,
             onTap: controller.updateApplication,
+          ),
+          _buildSettingTile(
+            title: languageController.translate("appversion"),
+            icon: Icons.info,
+            onTap: () async {
+              String version = await controller.appVersion();
+              Get.defaultDialog(
+                title: languageController.translate("appversion"),
+                content: Text(
+                  "إصدار التطبيق الحالي هو $version",
+                  style: GoogleFonts.ibmPlexSansArabic(fontSize: 16),
+                ),
+                confirm: ElevatedButton(
+                  onPressed: () => Get.back(),
+                  child: Text("حسناً"),
+                ),
+              );
+            },
           ),
         ],
       ),

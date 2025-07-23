@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yatrim/github_releses_services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsController extends GetxController {
   final storage = GetStorage(); // التخزين الدائم
@@ -119,15 +123,31 @@ class SettingsController extends GetxController {
   }
 
   void updateApplication() async {
-    final Uri emailUri = Uri(
-      scheme: 'mailto',
-      path: 'support@yatirim.com',
-      query: 'subject=Support Request&body=Write your message here',
-    );
-    if (await canLaunch(emailUri.toString())) {
-      await launch(emailUri.toString());
-    } else {
-      Get.snackbar("Error", "Could not open email client.");
+    GitHubApiService githubApiService = GitHubApiService();
+    githubApiService.getLatestReleaseWithApk().then((apkUrl) async {
+      if (await canLaunch(apkUrl)) {
+        await launch(apkUrl);
+      } else {
+        Get.snackbar("Error", "Could not open the APK download link.");
+      }
+    }).catchError((error) {
+      Get.snackbar("Error", "Failed to check for updates: $error");
+    });
+  }
+
+  Future<String> appVersion() async {
+    try {
+      final info = await PackageInfo.fromPlatform();
+      return info.version;
+    } catch (e) {
+      return 'Unknown';
     }
   }
 }
+//         Get.snackbar("Error", "Could get application version.");
+//       }
+//     }).catchError((error) {
+//       Get.snackbar("Error", "Failed to get application version on iOS: $error");
+//     });
+//   }
+// }

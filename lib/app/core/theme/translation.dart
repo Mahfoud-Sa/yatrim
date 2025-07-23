@@ -102,7 +102,9 @@ final Map<String, Map<String, String>> translations = {
     "loading": "يحمل",
     "usage_agreement":
         " باستخدام تطبيق \"تقويم تريم الهجري والميلادي\"  فأنت توافق على",
-    "terms": " الشروط والأحكام "
+    "terms": " الشروط والأحكام ",
+    "check_updates": " تحقق من التحديثات ",
+    "appverion": "إصدار التطبيق"
   },
   'en': {
     'login_page': 'Login Page',
@@ -207,7 +209,8 @@ final Map<String, Map<String, String>> translations = {
     "loading": "Loading",
     "usage_agreement":
         "By using the \"Tareem Hijri and Gregorian Calendar\" app, you agree to",
-    "terms": " the Terms and Conditions."
+    "terms": " the Terms and Conditions.",
+    "appverion": "application version"
   },
   'ms': {
     'login_page': 'Halaman Masuk',
@@ -314,6 +317,8 @@ final Map<String, Map<String, String>> translations = {
     "loading": "Memuatkan",
     "usage_agreement":
         "Dengan menggunakan aplikasi \"Kalender Tareem Hijrah dan Gregorian\", anda bersetuju",
-    "terms": " dengan Terma dan Syarat."
+    "terms": " dengan Terma dan Syarat.",
+    "check_updates": "check for updates",
+    "appverion": "application version"
   },
 };
