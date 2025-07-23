@@ -126,6 +126,11 @@ class SettingsScreen extends GetView<SettingsController> {
             icon: Icons.contact_mail,
             onTap: controller.contactUs,
           ),
+          _buildSettingTile(
+            title: languageController.translate('check_updates'),
+            icon: Icons.update,
+            onTap: controller.updateApplication,
+          ),
         ],
       ),
     );

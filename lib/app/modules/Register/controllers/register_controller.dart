@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:yatrim/app/core/widget/bottom_nav_wrapper.dart';
 import 'package:yatrim/app/modules/register/service/register_service.dart';
 import 'package:yatrim/app/routes/app_pages.dart';
+import 'package:yatrim/app/modules/register/service/register_service.dart';
 
 class RegisterController extends GetxController {
   var username = ''.obs;

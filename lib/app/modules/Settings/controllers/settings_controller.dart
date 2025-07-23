@@ -117,4 +117,17 @@ class SettingsController extends GetxController {
       Get.snackbar("Error", "Could not open email client.");
     }
   }
+
+  void updateApplication() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'support@yatirim.com',
+      query: 'subject=Support Request&body=Write your message here',
+    );
+    if (await canLaunch(emailUri.toString())) {
+      await launch(emailUri.toString());
+    } else {
+      Get.snackbar("Error", "Could not open email client.");
+    }
+  }
 }
