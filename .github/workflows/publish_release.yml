@@ -9,33 +9,37 @@ on:
 jobs:
   build:
     name: Build APK
-    runs-on: windows-latest # Changed from ubuntu-latest to windows-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Java 11 (Required for Flutter 3.x)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.x'
+          flutter-version: '3.16.9' # Use a specific version (recommended)
           channel: 'stable'
 
       - name: Get Flutter packages
         run: flutter pub get
 
-      # --- DIAGNOSTIC STEP (Windows PowerShell version) ---
-      # This step helps debug the file path issue using Windows commands
       - name: List directory contents for debugging
         run: |
-          Write-Host "Listing contents of lib/app/modules/ to check for case sensitivity issues..."
+          Write-Host "Listing contents of lib/app/modules/..."
           Get-ChildItem -Path "lib/app/modules/" -Recurse | Format-Table Name, FullName
         shell: powershell
 
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Find and prepare APK path for upload (Windows version)
+      - name: Find and prepare APK path for upload
         id: find_apk
         run: |
           $APK_PATH = Get-ChildItem -Path "build/app/outputs/flutter-apk" -Filter "app-release.apk" -Recurse | Select-Object -First 1 -ExpandProperty FullName
@@ -44,7 +48,6 @@ jobs:
             exit 1
           }
           Write-Host "Found APK at $APK_PATH"
-          # Create a predictable directory for the artifact
           New-Item -ItemType Directory -Force -Path "artifacts"
           Copy-Item -Path $APK_PATH -Destination "artifacts/app-release.apk"
           Write-Host "APK copied to artifacts/app-release.apk"
@@ -59,7 +62,7 @@ jobs:
   publish-release:
     name: Publish Release
     needs: build
-    runs-on: windows-latest # Changed from ubuntu-latest to windows-latest
+    runs-on: windows-latest
     permissions:
       contents: write
 
