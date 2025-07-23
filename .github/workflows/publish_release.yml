@@ -15,20 +15,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Java 11 (Required for Flutter 3.x)
+      # 👇 Change from Java 11 to Java 17
+      - name: Set up Java 17 (Required for AGP 8.0+)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
-      - name: Set up Flutter (Version 3.32.5 - matches your local)
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.5'  # Exact version you're using locally
+          flutter-version: '3.32.5'  # Your working version
           channel: 'stable'
 
-      - name: Verify Flutter version
-        run: flutter --version
+      - name: Verify Java version
+        run: java -version
 
       - name: Get dependencies
         run: flutter pub get
@@ -36,17 +37,11 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Prepare APK artifact
-        run: |
-          mkdir -p artifacts
-          cp build/app/outputs/flutter-apk/app-release.apk artifacts/
-        shell: bash
-
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: artifacts/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
   publish-release:
     name: Publish Release
@@ -65,8 +60,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          body: "Built with Flutter 3.32.5 (Dart 3.8.1)"
           files: app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
