@@ -132,12 +132,12 @@ class SettingsScreen extends GetView<SettingsController> {
             onTap: controller.updateApplication,
           ),
           _buildSettingTile(
-            title: languageController.translate("appversion"),
+            title: languageController.translate("appverion"),
             icon: Icons.info,
             onTap: () async {
               String version = await controller.appVersion();
               Get.defaultDialog(
-                title: languageController.translate("appversion"),
+                title: languageController.translate("appverion"),
                 content: Text(
                   "إصدار التطبيق الحالي هو $version",
                   style: GoogleFonts.ibmPlexSansArabic(fontSize: 16),

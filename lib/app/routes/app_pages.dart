@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:yatrim/app/modules/home/bindings/home_binding.dart';
+import 'package:yatrim/app/modules/home/views/home_view.dart';
 
 import '../core/auth_middleware.dart';
 import '../modules/EditProfile/bindings/edit_profile_binding.dart';
@@ -87,6 +89,11 @@ class AppPages {
       name: _Paths.FAVORITE,
       page: () => const FavoriteView(),
       binding: FavoriteBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
     ),
   ];
 }

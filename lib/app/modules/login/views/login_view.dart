@@ -143,9 +143,12 @@ class LoginView extends GetView<LoginController> {
                     width: double.infinity,
                     height: 65,
                     child: OutlinedButton(
-                      onPressed: () {
-                        Get.to(() => BottomNavWrapper());
-                      },
+                      onPressed: controller.continueAsGuest,
+                      //() {
+                      //  Get.to(() => BottomNavWrapper());
+
+                      //Get.offNamed(Routes.HOME);
+                      // },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         side: const BorderSide(color: Color(0xFFEEEEEE)),

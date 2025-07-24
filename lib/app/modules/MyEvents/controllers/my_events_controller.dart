@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:yatrim/app/modules/MyEvents/model/my_event_model.dart';
 import 'package:yatrim/app/modules/MyEvents/service/my_event_service.dart';
 import 'package:yatrim/app/modules/events/model/events_model.dart';
+import 'package:yatrim/app/routes/app_pages.dart';
 
 class MyEventsController extends GetxController {
   final _service = PersonalEventService();
@@ -122,8 +123,10 @@ class MyEventsController extends GetxController {
     super.onInit();
     final token = box.read('token');
     print(token);
-    if (token == null) {
+    if (token != null) {
       fetchPersonalEvents("token $token");
+    } else {
+      Get.offNamed(Routes.LOGIN);
     }
   }
 }

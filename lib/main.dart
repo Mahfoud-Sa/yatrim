@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return Obx(
           () => GetMaterialApp(
-            title: "Application",
+            title: "ياتريم",
             debugShowCheckedModeBanner: false,
             locale: Locale(languageController.selectedLanguage.value),
 

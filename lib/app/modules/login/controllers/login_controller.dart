@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:yatrim/app/core/auth_service.dart';
 import 'package:yatrim/app/core/widget/bottom_nav_wrapper.dart';
 import 'package:yatrim/app/modules/login/service/login_service.dart';
+import 'package:yatrim/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   var username = ''.obs;
@@ -59,6 +60,14 @@ class LoginController extends GetxController {
         print("Login Error: $e");
         Get.snackbar('Error', 'Something went wrong. Please try again.');
       }
+    }
+  }
+
+  Future<void> continueAsGuest() async {
+    try {
+      Get.offNamed(Routes.HOME);
+    } catch (error) {
+      Get.snackbar('Error', 'Failed to continue as guest: $error');
     }
   }
 
