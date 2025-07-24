@@ -1,4 +1,4 @@
-# تقويم باتريم
+# تقويم ياتريم
 
 <img width="360" height="778" alt="المفضلة" src="https://github.com/user-attachments/assets/8a990a3d-7b8f-407f-ae86-c82f261f1ce3" />
 <img width="360" height="778" alt="انشاء حساب جديد" src="https://github.com/user-attachments/assets/99c1486e-d555-40f8-8dc1-a23daeeb302b" />
